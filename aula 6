@@ -25,8 +25,17 @@ estoque = {
 #Adicionando novo produto
 
 def adicionarProduto(nome, preco, quantidade):
-  estoque[nome] = {"preco": preco, "quantidade": quantidade}
-  print(f'item {nome} adicionado com sucesso! ')
+  if nome in estoque:
+      print(f'O produto {nome} já existe no estoque.')
+      opcao = input('Deseja atualizar os dados? [S/N]: ').lower()
+      if opcao == 's':
+          estoque[nome] = {"preco": preco, "quantidade": quantidade}
+          print(f'Produto {nome} atualizado com sucesso!')
+      else:
+          print('Operação cancelada.')
+  else:
+        estoque[nome] = {"preco": preco, "quantidade": quantidade}
+        print(f'Produto {nome} adicionado com sucesso!')
 #adicionando um produto
 #adicionarProduto('Caixa de som', 800, 3)
 
