@@ -1,0 +1,141 @@
+from time import sleep
+estoque = {
+    "Celular": {"preco": 2500, "quantidade": 10},
+    "Notebook": {"preco": 4500, "quantidade": 5},
+    "Fone de ouvido": {"preco": 300, "quantidade": 20},
+    "Teclado": {"preco": 150, "quantidade": 15},
+    "Mouse": {"preco": 100, "quantidade": 25},
+    "Monitor": {"preco": 1200, "quantidade": 8},
+    "Impressora": {"preco": 800, "quantidade": 6},
+    "Tablet": {"preco": 1800, "quantidade": 9},
+    "Carregador": {"preco": 80, "quantidade": 30},
+    "Cabo USB": {"preco": 40, "quantidade": 50},
+    "Webcam": {"preco": 250, "quantidade": 12},
+    "Caixa de som": {"preco": 350, "quantidade": 10},
+    "HD Externo": {"preco": 400, "quantidade": 7},
+    "Pendrive": {"preco": 60, "quantidade": 40},
+    "Smartwatch": {"preco": 900, "quantidade": 4},
+    "Roteador": {"preco": 200, "quantidade": 14},
+    "Cadeira Gamer": {"preco": 1500, "quantidade": 3},
+    "Microfone": {"preco": 500, "quantidade": 6},
+    "Cooler": {"preco": 100, "quantidade": 18},
+    "Controle USB": {"preco": 180, "quantidade": 11}
+}
+
+#Adicionando novo produto
+
+def adicionarProduto(nome, preco, quantidade):
+  if nome in estoque:
+      print(f'O produto {nome} já existe no estoque.')
+      opcao = input('Deseja atualizar os dados? [S/N]: ').lower()
+      if opcao == 's':
+          estoque[nome] = {"preco": preco, "quantidade": quantidade}
+          print(f'Produto {nome} atualizado com sucesso!')
+      else:
+          print('Operação cancelada.')
+  else:
+        estoque[nome] = {"preco": preco, "quantidade": quantidade}
+        print(f'Produto {nome} adicionado com sucesso!')
+#adicionando um produto
+#adicionarProduto('Caixa de som', 800, 3)
+
+
+#atualizar preco
+
+def atualizarPreco (nome, novo_preco):
+   if nome in estoque:
+    estoque[nome]['preco'] = novo_preco
+    print(f'O valor de  {nome} foi atualizado para R${novo_preco:.2f}')
+   else:
+    print('Item não encontrado')
+#atualizando o preco
+#atualizarPreco('Celular', 3000)
+
+#Atualizando quantidade
+def atualizarQuantidade(nome,nova_quantidade):
+  if nome in estoque:
+    estoque[nome]['quantidade'] = nova_quantidade
+    print(f'Quantidade de {nome} atualizada para {nova_quantidade}')
+  else:
+    print('item não encontrado')
+#atualizando quantidade
+#atualizarQuantidade('Celular', 10)
+
+#removendo um produto
+def removerProduto(nome):
+  if nome in estoque:
+    del estoque[nome]
+    print(f'O produto {nome} foi removido com sucesso!')
+  else:
+    print('produto não encontrado')
+#removendo o produto
+#removerProduto('Celular')
+
+#exibir todos os produtos
+def exibirProdutos():
+  print('Lista de produtos no estoque\n ')
+  for nome, info in estoque.items():
+    print(f'{nome} - Preço R$:{info["preco"]}, Quantidade: {info["quantidade"]}\n')
+    sleep(0.2)
+#buscando produtos
+def buscarProduto(nome):
+    if nome in estoque:
+        info = estoque[nome]
+        print('-='*30)
+        print(f'{nome} - Preço: R${info["preco"]}, Quantidade: {info["quantidade"]}')
+        print('-='*30)
+    else:
+        print('Produto não encontrado.')
+#buscando o produto
+buscarProduto('Celular')
+
+
+#exibindo os produtos
+#exibirProdutos()
+
+while True:
+    print('BEM VINDO'.center(40))
+    print('O que deseja fazer hoje?'.center(40))
+    print('''\n[ 1 ] Adicionar um novo produto no estoque
+[ 2 ] Atualizar o preco de um produto
+[ 3 ] Remover um item do estoque
+[ 4 ] Exibir todos os produtos
+[ 5 ] Buscar produtos
+[ 6 ] Sair''')
+
+    try:
+        escolha = int(input('Escolha uma opção: '))
+    except ValueError:
+        print("Por favor, digite um número válido.")
+        continue
+
+    if escolha == 6:
+        break
+
+    match escolha:
+        case 1:
+            nome = str(input('Nome do produto: ')).capitalize()
+            qtd = int(input('Quantidade: '))
+            preco = float(input('preço do produto: '))
+            adicionarProduto(nome, preco, qtd)
+        case 2:
+            nome = str(input('Nome do produto: ')).capitalize()
+            preco = int(input('Novo preço: '))
+            atualizarPreco(nome, preco)
+        case 3:
+            nome = str(input('Nome do produto: ')).capitalize()
+            removerProduto(nome)
+        case 4:
+            exibirProdutos()
+        case 5:
+          nome = str(input('Escreva o produto: '))
+          buscarProduto(nome)
+        case _:
+            print("Número desconhecido")
+
+    sair = str(input('Deseja continuar? [S / N]: '))
+    if sair.lower() != 's':
+        break
+
+print('-='*30)
+print('Programa de estoque encerrado')
